@@ -22,9 +22,11 @@ public class SimRace {
                 throw new RuntimeException(e);
             }
         }
+
         /*plätze.forEach((k, v) -> {
             System.out.println(k +" "+ v);
         });*/
+
         List<Map.Entry<String, Integer>> tmp = plätze.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue())
