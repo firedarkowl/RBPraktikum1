@@ -14,7 +14,6 @@ public class Car extends Thread{
 
     @Override
     public void run() {
-        //System.out.println(this.getName()+ " erstellt");
         for (int j = 0; j < rundenZahl; j++) {
             int i = ThreadLocalRandom.current().nextInt(0, 100 +1);
             try {
@@ -23,17 +22,6 @@ public class Car extends Thread{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }
-        try {
-//            System.out.println(this.getName()+ " fertig");
-//            System.out.println(this.getZeit()+ " Zeit");
-
-            /*for (Map.Entry<String, Integer> entry:plätze.entrySet()) {
-                System.out.println(entry.getKey() + " " + entry.getValue());
-            }*/
-            //join();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
 
     }

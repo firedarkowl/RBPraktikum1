@@ -10,22 +10,22 @@ public class SimRace {
 
     private static Map<String, Integer> plätze = new HashMap<>();
     public static void main(String[] args) {
-
+        List<Car> cars = new ArrayList<>();
         for (int i = 0; i < autos; i++) {
             Car car = new Car(runden);
+            cars.add(car);
+            System.out.println(car.getName() +" gestartet");
             car.start();
-            try {
-                car.join();
-                plätze.put(car.getName(), car.getZeit());
-
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
         }
 
-        /*plätze.forEach((k, v) -> {
-            System.out.println(k +" "+ v);
-        });*/
+        cars.forEach(car -> {
+            try {
+                car.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            plätze.put(car.getName(), car.getZeit());
+        });
 
         List<Map.Entry<String, Integer>> tmp = plätze.entrySet()
                 .stream()
