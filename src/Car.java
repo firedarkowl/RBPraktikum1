@@ -1,21 +1,21 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
+
 
 public class Car extends Thread{
 
-    private int rundenZahl;
+    private final int rundenZahl;
     private int zeit = 0;
+    private final String name;
 
-
-    public Car(int zahl){
+    public Car(String name, int zahl){
+        this.name = name;
         this.rundenZahl = zahl;
     }
 
     @Override
     public void run() {
         for (int j = 0; j < rundenZahl; j++) {
-            int i = ThreadLocalRandom.current().nextInt(0, 100 +1);
+            int i = new Random().nextInt(100);
             try {
                 zeit = zeit + i;
                 sleep(i);
@@ -28,6 +28,11 @@ public class Car extends Thread{
 
     public int getZeit() {
         return zeit;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
 }

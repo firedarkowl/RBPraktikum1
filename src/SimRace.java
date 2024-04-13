@@ -1,36 +1,45 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SimRace {
 
-    private static final int autos = 5;
-    private static final int runden = 5;
+    private static final int anz_autos = 5;
+    private static final int strecke = 250;
 
-    private static Map<String, Integer> plätze = new HashMap<>();
     public static void main(String[] args) {
+
+        System.out.println("Rennen starten");
+
+        System.out.println("Cars erstellen");
         List<Car> cars = new ArrayList<>();
-        for (int i = 0; i < autos; i++) {
-            Car car = new Car(runden);
-            cars.add(car);
-            System.out.println(car.getName() +" gestartet");
+        for (int i = 0; i < anz_autos; i++) {
+            System.out.println("Cars adden");
+            cars.add(new Car("Wagen " + i, strecke));
+        }
+        for (Car car : cars) {
+            System.out.println("Cars parallel starten");
             car.start();
         }
 
-        cars.forEach(car -> {
+        System.out.println("Warten auf das Ende von dem Rennen");
+        for (Car car : cars) {
             try {
                 car.join();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            plätze.put(car.getName(), car.getZeit());
-        });
+        }
 
-        List<Map.Entry<String, Integer>> tmp = plätze.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue())
+        System.out.println("Rennen vorbei");
+        List<Car> sortedCars = cars.stream()
+                .sorted(Comparator.comparing(Car::getZeit).reversed())
                 .toList();
-        tmp.forEach(e -> System.out.println(e));
+
+        int place = 1;
+        System.out.println("**** Endstand ****");
+        for (Car car : sortedCars) {
+            System.out.println(place + ". Platz: " + car.toString() + " Zeit: " + car.getZeit());
+            place++;
+        }
+
     }
 }
